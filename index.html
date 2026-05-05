@@ -84,11 +84,17 @@
     overflow: hidden;
   }
   .candidate {
-    display: flex; align-items: center;
+    display: flex;
+    flex-direction: column;
     padding: 16px 18px;
     border-bottom: 1px solid var(--border);
-    gap: 14px;
+    gap: 10px;
     transition: background 0.15s;
+  }
+  .candidate-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
   }
   .candidate:last-child { border-bottom: none; }
   .candidate:hover { background: #faf9f5; }
@@ -128,6 +134,38 @@
   .candidate-meta {
     font-size: 13px;
     color: var(--ink-soft);
+  }
+  .candidate-comment {
+    margin-left: 42px;
+    margin-right: 0;
+  }
+  .candidate-comment textarea {
+    width: 100%;
+    min-height: 36px;
+    max-height: 200px;
+    padding: 8px 10px;
+    font-family: inherit;
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    box-sizing: border-box;
+  }
+  .candidate-comment textarea::placeholder {
+    color: var(--ink-faint);
+  }
+  .candidate-comment textarea:focus {
+    border-color: var(--ink-soft);
+    box-shadow: 0 0 0 3px rgba(26,26,26,0.06);
+  }
+  .candidate.decided-approve .candidate-comment textarea,
+  .candidate.decided-reject .candidate-comment textarea {
+    background: var(--surface);
   }
   .actions { display: flex; gap: 6px; }
   .btn {
@@ -228,7 +266,7 @@
   <div class="candidate-list" id="candidate-list"></div>
 
   <p class="help-text">
-    Press <kbd>Y</kbd> to approve, <kbd>N</kbd> to reject. Use <kbd>↑</kbd> <kbd>↓</kbd> to move between candidates. The current candidate is highlighted.
+    Press <kbd>Y</kbd> to approve, <kbd>N</kbd> to reject. Use <kbd>↑</kbd> <kbd>↓</kbd> to move between candidates. Add a comment in the box below each candidate (optional). Comments are included in the submission email.
   </p>
 </div>
 
@@ -240,20 +278,27 @@
 <script>
   const CANDIDATES = [{"name": "Vicky Roussou", "linkedin": "https://www.linkedin.com/in/vicky-roussou-52653223", "position": "Finance Manager", "company": "Santis Global"}, {"name": "Shiv Kanan Choudhury", "linkedin": "https://www.linkedin.com/in/shiv-kanan-choudhury-bb142b1b7", "position": "Strategic Finance", "company": "Stability AI"}, {"name": "Cristina Diaz", "linkedin": "https://www.linkedin.com/in/cristinadpb", "position": "Finance Manager", "company": "AXA Investment Managers"}, {"name": "Geoffrey Tejedor", "linkedin": "https://www.linkedin.com/in/gtejedor", "position": "Finance Manager", "company": "Google Deepmind"}, {"name": "Bankole Ogunbowale", "linkedin": "https://www.linkedin.com/in/bankoleogun", "position": "Senior Finance Manager", "company": "Databricks"}, {"name": "Nikita Phul", "linkedin": "https://www.linkedin.com/in/nikita-phul", "position": "Director of Finance and Financial Operations", "company": ""}, {"name": "Josh O'Sullivan", "linkedin": "https://www.linkedin.com/in/josh-osullivan", "position": "Senior FP&A Analyst", "company": "Faculty AI"}, {"name": "Alexis de Villemandy", "linkedin": "https://www.linkedin.com/in/alexis-de-villemandy-767b6377", "position": "Finance Manager", "company": "Nabla"}, {"name": "Matthew Smith", "linkedin": "https://www.linkedin.com/in/smithfmatthew", "position": "Senior Finance Manager", "company": "PolyAI"}, {"name": "Nikola Mikolaskova", "linkedin": "https://www.linkedin.com/in/nikola-mikolaskova-b37a02177", "position": "RevOps Systems Manager", "company": "Monta"}];
   const EMAIL_TO = "macdowell.johnston@ironbridgesg.com";
-  const STORAGE_KEY = "candidate_review_v1";
+  const STORAGE_KEY = "candidate_review_v2";
 
   let decisions = {};
+  let comments = {};
   let currentIndex = 0;
 
   function loadState() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) decisions = JSON.parse(saved);
-    } catch (e) { decisions = {}; }
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        decisions = parsed.decisions || {};
+        comments = parsed.comments || {};
+      }
+    } catch (e) { decisions = {}; comments = {}; }
   }
 
   function saveState() {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(decisions)); } catch (e) {}
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ decisions, comments }));
+    } catch (e) {}
   }
 
   function escapeHtml(s) {
@@ -280,18 +325,23 @@
       const metaText = metaParts.join(' · ');
 
       row.innerHTML = `
-        <div class="candidate-num">${i + 1}.</div>
-        <div class="candidate-info">
-          <div class="candidate-name"><a href="${escapeHtml(c.linkedin)}" target="_blank" rel="noopener">${escapeHtml(c.name)}</a></div>
-          ${metaText ? `<div class="candidate-meta">${escapeHtml(metaText)}</div>` : ''}
+        <div class="candidate-top">
+          <div class="candidate-num">${i + 1}.</div>
+          <div class="candidate-info">
+            <div class="candidate-name"><a href="${escapeHtml(c.linkedin)}" target="_blank" rel="noopener">${escapeHtml(c.name)}</a></div>
+            ${metaText ? `<div class="candidate-meta">${escapeHtml(metaText)}</div>` : ''}
+          </div>
+          <div class="actions">
+            <button class="btn btn-yes ${decision === 'approve' ? 'active' : ''}" data-idx="${i}" data-action="approve" title="Approve (Y)" aria-label="Approve">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+            <button class="btn btn-no ${decision === 'reject' ? 'active' : ''}" data-idx="${i}" data-action="reject" title="Reject (N)" aria-label="Reject">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
         </div>
-        <div class="actions">
-          <button class="btn btn-yes ${decision === 'approve' ? 'active' : ''}" data-idx="${i}" data-action="approve" title="Approve (Y)" aria-label="Approve">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          </button>
-          <button class="btn btn-no ${decision === 'reject' ? 'active' : ''}" data-idx="${i}" data-action="reject" title="Reject (N)" aria-label="Reject">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-          </button>
+        <div class="candidate-comment">
+          <textarea data-idx="${i}" placeholder="Add a comment (optional)" rows="1">${escapeHtml(comments[key] || '')}</textarea>
         </div>
       `;
       list.appendChild(row);
@@ -375,6 +425,13 @@
     const approved = CANDIDATES.filter(c => decisions[candidateKey(c)] === 'approve');
     const rejected = CANDIDATES.filter(c => decisions[candidateKey(c)] === 'reject');
     const date = new Date().toLocaleString();
+    const formatEntry = (c, i) => {
+      const meta = [c.position, c.company].filter(Boolean).join(' · ');
+      const comment = (comments[candidateKey(c)] || '').trim();
+      let entry = `${i + 1}. ${c.name}${meta ? ' — ' + meta : ''}\n   ${c.linkedin}\n`;
+      if (comment) entry += `   Comment: ${comment}\n`;
+      return entry;
+    };
     let body = `Candidate Review Results\n`;
     body += `Submitted: ${date}\n`;
     body += `Total reviewed: ${approved.length + rejected.length} of ${CANDIDATES.length}\n`;
@@ -382,18 +439,12 @@
     body += `========================================\n`;
     body += `APPROVED (${approved.length})\n`;
     body += `========================================\n`;
-    approved.forEach((c, i) => {
-      const meta = [c.position, c.company].filter(Boolean).join(' · ');
-      body += `${i + 1}. ${c.name}${meta ? ' — ' + meta : ''}\n   ${c.linkedin}\n`;
-    });
+    approved.forEach((c, i) => { body += formatEntry(c, i); });
     body += `\n`;
     body += `========================================\n`;
     body += `REJECTED (${rejected.length})\n`;
     body += `========================================\n`;
-    rejected.forEach((c, i) => {
-      const meta = [c.position, c.company].filter(Boolean).join(' · ');
-      body += `${i + 1}. ${c.name}${meta ? ' — ' + meta : ''}\n   ${c.linkedin}\n`;
-    });
+    rejected.forEach((c, i) => { body += formatEntry(c, i); });
     return body;
   }
 
@@ -411,17 +462,41 @@
       return;
     }
     if (e.target.closest('a')) return;
+    if (e.target.tagName === 'TEXTAREA') return;
     const row = e.target.closest('.candidate');
     if (!row) return;
     const idx = parseInt(row.id.replace('candidate-', ''));
     if (!isNaN(idx)) setCurrent(idx, false);
   });
 
+  // Save comment as the user types (debounced lightly via input event)
+  document.getElementById('candidate-list').addEventListener('input', (e) => {
+    if (e.target.tagName !== 'TEXTAREA') return;
+    const idx = parseInt(e.target.dataset.idx);
+    if (isNaN(idx)) return;
+    const key = candidateKey(CANDIDATES[idx]);
+    const val = e.target.value;
+    if (val.trim()) {
+      comments[key] = val;
+    } else {
+      delete comments[key];
+    }
+    saveState();
+  });
+
+  // When a textarea is focused, set that row as current (without scrolling)
+  document.getElementById('candidate-list').addEventListener('focusin', (e) => {
+    if (e.target.tagName !== 'TEXTAREA') return;
+    const idx = parseInt(e.target.dataset.idx);
+    if (!isNaN(idx)) setCurrent(idx, false);
+  });
+
   document.getElementById('submit-btn').addEventListener('click', submit);
   document.getElementById('jump-next').addEventListener('click', jumpToNextUnreviewed);
   document.getElementById('reset-btn').addEventListener('click', () => {
-    if (confirm('Clear all decisions? This cannot be undone.')) {
+    if (confirm('Clear all decisions and comments? This cannot be undone.')) {
       decisions = {};
+      comments = {};
       saveState();
       render();
       setCurrent(0, false);
