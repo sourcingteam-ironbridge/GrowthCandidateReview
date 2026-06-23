@@ -222,11 +222,11 @@
 <body>
 
 <!-- ============================================================ -->
-<!--  EDIT THESE TWO LINES to change the page heading             -->
+<!--  EDIT THESE THREE LINES to set the heading and recipient     -->
 <!-- ============================================================ -->
 <script>
-  const PAGE_TITLE = "Candidate Review";
-  const PAGE_SUBTITLE = "Profiles up for consideration. Give each a Yes or No, add any notes, then hit “Email feedback” to send the summary back.";
+  const PAGE_TITLE = "Sales Leadership \u2014 Priority Shortlist";
+  const PAGE_SUBTITLE = "Priority candidates for the two commercial-leadership roles \u2014 Sales Director (Guildford) and VP Sales (London). Each card is tagged with the role it best fits. Give each a Yes or No, add notes, then hit “Email feedback” to send your verdicts back.";
   const FEEDBACK_TO = "macdowell.johnston@ironbridgesg.com";
 </script>
 
@@ -280,7 +280,7 @@ Role: Forward-Deployed Engineer
       <button class="ghost" id="clearBtn">Clear saved data</button>
     </div>
     <div class="embed-box" id="embedBox">
-      <label>Paste this into index.html (replace the <code>EMBEDDED_CANDIDATES</code> block) so your co-founder sees the same candidates on the live page:</label>
+      <label>Paste this into index.html (replace the <code>candidate-data</code> script block) so your co-founder sees the same candidates on the live page:</label>
       <textarea class="embed" id="embedOut" readonly></textarea>
       <div style="margin-top:10px"><button id="copyEmbed">Copy code</button></div>
     </div>
@@ -292,136 +292,527 @@ Role: Forward-Deployed Engineer
 </main>
 
 <footer>
-  <div class="wrap">Comments are stored locally in this browser. Use “Export comments” to save or share them.</div>
+  <div class="wrap">Verdicts and comments are stored locally in this browser. Use “Email feedback” to send your summary back.</div>
 </footer>
 
 <div class="toast" id="toast"></div>
 
 <!-- ============================================================ -->
-<!--  EMBEDDED_CANDIDATES  — replace the sample data below with    -->
-<!--  your own (or paste via the panel and use "Generate embed")   -->
+<!--  candidate-data  — replace the sample data below with your    -->
+<!--  own shortlist (or paste via the panel and use "Generate      -->
+<!--  embed code"). Names + links published here are visible to    -->
+<!--  anyone who can see the repo — keep real shortlists PRIVATE.   -->
 <!-- ============================================================ -->
 <script id="candidate-data" type="application/json">
 [
   {
-    "Name": "Mark Baker-Steljes",
-    "Role": "Senior Sales Director",
-    "Company": "Algosec",
-    "LinkedIn": "https://www.linkedin.com/in/markbaker87"
+    "Name": "Rye Austin",
+    "Role": "CCO @ Core Technology Systems",
+    "Role fit": "VP Sales — London (0-1 / founder)",
+    "Channel": "MSP-pipeline",
+    "Location": "London",
+    "Score": "13/24 (MSP rubric)",
+    "LinkedIn": "https://www.core.co.uk/news/author/rye-austin",
+    "Note": "Strongest AI-native signal in the pool — built an AI-led commercial motion"
   },
   {
-    "Name": "Richard S",
-    "Role": "BD/Sales Professional",
-    "Company": "Attensi",
-    "LinkedIn": "https://www.linkedin.com/in/richardsenger"
+    "Name": "Carrie Whamond",
+    "Role": "Founding Partner @ Alternit One",
+    "Role fit": "VP Sales — London (0-1 / founder)",
+    "Channel": "MSP-pipeline",
+    "Location": "London",
+    "Score": "17/24 (MSP rubric)",
+    "LinkedIn": "https://www.linkedin.com/in/carrie-whamond/",
+    "Note": "Co-founder — built MSP commercial function from zero"
   },
   {
-    "Name": "Christos Sarros",
-    "Role": "VP Sales",
-    "Company": "Diligent",
-    "LinkedIn": "https://www.linkedin.com/in/sarrosc"
+    "Name": "Craige Winter-Nolan",
+    "Role": "Sales Director @ Cisilion",
+    "Role fit": "VP Sales — London (0-1 / founder)",
+    "Channel": "MSP-pipeline",
+    "Location": "London (HQ Leatherhead)",
+    "Score": "18/24 (MSP rubric)",
+    "LinkedIn": "https://www.linkedin.com/in/cwnleadership/",
+    "Note": "Built three new-business sales teams from scratch"
   },
   {
-    "Name": "Kobus du Rand",
-    "Role": "Head of Strategic Sales",
-    "Company": "Miro",
-    "LinkedIn": "https://www.linkedin.com/in/kobus-du-rand-bb22a556"
+    "Name": "Tim Ward",
+    "Role": "Co-Founder / BD Director @ SEP2",
+    "Role fit": "VP Sales — London (0-1 / founder)",
+    "Channel": "MSP-pipeline",
+    "Location": "London (HQ Leeds)",
+    "Score": "14/24 (MSP rubric)",
+    "LinkedIn": "https://uk.linkedin.com/in/timward-sep2",
+    "Note": "Co-founder — built cyber MSSP sales 0-1"
   },
   {
-    "Name": "Joseph Kovacs",
-    "Role": "VP Sales & Partnerships",
-    "Company": "Arcesium",
-    "LinkedIn": "https://www.linkedin.com/in/jo3box3r"
+    "Name": "Jake Burtonshaw",
+    "Role": "Head of Sales & AM @ Fitzrovia IT",
+    "Role fit": "VP Sales — London (0-1 / founder)",
+    "Channel": "MSP-pipeline",
+    "Location": "London",
+    "Score": "15/24 (MSP rubric)",
+    "LinkedIn": "https://uk.linkedin.com/in/jakeburonshaw",
+    "Note": "Built procurement then commercial function from scratch"
   },
   {
-    "Name": "Anupam Prakash",
-    "Role": "VP - Client Engagement (Head of New Sales)",
-    "Company": "Coforge",
-    "LinkedIn": "https://www.linkedin.com/in/anprakash"
+    "Name": "Barry Cohen",
+    "Role": "Sales Director & Co-Owner @ Charles Square",
+    "Role fit": "VP Sales — London (0-1 / founder)",
+    "Channel": "MSP-pipeline",
+    "Location": "London",
+    "Score": "13/24 (MSP rubric)",
+    "LinkedIn": "https://www.linkedin.com/in/barrycharlessquare/",
+    "Note": "Co-owner — built the FS-niche sales engine"
   },
   {
-    "Name": "Henrietta Tamas-Szora",
-    "Role": "Sales Director",
-    "Company": "Orbus Software",
-    "LinkedIn": "https://www.linkedin.com/in/henriettatsz"
+    "Name": "Bryn Morgan",
+    "Role": "Head of Business Development @ Lanware",
+    "Role fit": "VP Sales — London (0-1 / founder)",
+    "Channel": "MSP-pipeline",
+    "Location": "Greater London",
+    "Score": "13/24 (MSP rubric)",
+    "LinkedIn": "https://uk.linkedin.com/in/brynmorgan",
+    "Note": "Co-founded HR DataHub; ex start-up/scale-up director"
   },
   {
-    "Name": "Will Jackson",
-    "Role": "Head of Sales",
-    "Company": "32Co",
-    "LinkedIn": "https://www.linkedin.com/in/willjackson123"
+    "Name": "Andy Roberts",
+    "Role": "Sales Director @ JUMPSEC",
+    "Role fit": "VP Sales — London (0-1 / founder)",
+    "Channel": "MSP-pipeline",
+    "Location": "London (Acton/Richmond)",
+    "Score": "13/24 (MSP rubric)",
+    "LinkedIn": "https://www.linkedin.com/in/andy-roberts-adv-aps-9371656/",
+    "Note": "Borderline — building the MSSP commercial motion (single-source)"
   },
   {
-    "Name": "Puneet Ramaul",
-    "Role": "Sales Director",
-    "Company": "HCLSoftware",
-    "LinkedIn": "https://www.linkedin.com/in/ramaulp"
+    "Name": "Ian Ewers",
+    "Role": "Group VP Sales @ Performanta",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "PE-backed (Beech Tree)",
+    "Location": "Maidenhead-area? Berks (verify)",
+    "Score": "18/27 (PE rubric)",
+    "LinkedIn": "https://www.linkedin.com/in/ian-ewers-f-isp-a576a83/"
   },
   {
-    "Name": "Andrew Taggart",
-    "Role": "Director, Head of Growth",
-    "Company": "Devoteam",
-    "LinkedIn": "https://www.linkedin.com/in/andrewtaggart1"
+    "Name": "Tom Blackburn",
+    "Role": "Sales Director @ Saepio",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "PE-backed (Maven)",
+    "Location": "London (verify commute)",
+    "Score": "17/27 (PE rubric)",
+    "LinkedIn": "https://www.linkedin.com/in/thomasblackburn/",
+    "Note": "Best role-shape fit — player-coach over ~4, SMB cyber services"
   },
   {
-    "Name": "Anisa Cader",
-    "Role": "Sales Director",
-    "Company": "RiskXchange",
-    "LinkedIn": "https://www.linkedin.com/in/anisa-cader-8ab105196"
+    "Name": "Martin Papadatos",
+    "Role": "Chief Sales & Ops Officer @ Bionic",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "PE-backed (OMERS)",
+    "Location": "London-area (town unconf.)",
+    "Score": "17/27 (PE rubric)",
+    "LinkedIn": "https://uk.linkedin.com/in/mpapadatos"
   },
   {
-    "Name": "Zulfiya Merchant",
-    "Role": "Sales & Channel Leader",
-    "Company": "AWS",
-    "LinkedIn": "https://www.linkedin.com/in/zulfiyamerchant"
+    "Name": "Wendy Broughton",
+    "Role": "Sales Director, Corporate @ Digital Space",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "PE-backed (Graphite)",
+    "Location": "Greater London",
+    "Score": "15/27 (PE rubric)",
+    "LinkedIn": "https://uk.linkedin.com/in/wendybroughton"
   },
   {
-    "Name": "Harry Back",
-    "Role": "Sales Director",
-    "Company": "LIVE STORY",
-    "LinkedIn": "https://www.linkedin.com/in/harryback"
+    "Name": "Jeremy Suddards",
+    "Role": "CRO @ Six Degrees",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "PE-backed (Charlesbank)",
+    "Location": "Walton-on-Thames, Surrey",
+    "Score": "15/27 (PE rubric)",
+    "Note": "Surrey-local; senior — may be over the player-coach bar"
   },
   {
-    "Name": "Lewis James Gearing",
-    "Role": "AI Commercial Director",
-    "Company": "Version 1",
-    "LinkedIn": "https://www.linkedin.com/in/lewis-james-gearing-626899109"
+    "Name": "Matt Jones",
+    "Role": "Head of Sales @ Cisilion",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "UK (unconfirmed; HQ Leatherhead)",
+    "Score": "15/24 (MSP rubric)"
   },
   {
-    "Name": "Chuk Ibeh",
-    "Role": "GTM Lead",
-    "Company": "Engineering Insights",
-    "LinkedIn": "https://www.linkedin.com/in/chukibeh"
+    "Name": "Sam Mager",
+    "Role": "CCO / Co-Founder @ Krome Technologies",
+    "Role fit": "Sales Director — Guildford (VP-capable)",
+    "Channel": "MSP-pipeline",
+    "Location": "Chertsey, Surrey",
+    "Score": "15/24 (MSP rubric)",
+    "LinkedIn": "https://www.linkedin.com/in/sam-mager-7204079/",
+    "Note": "Founder DNA + Surrey base — strong for EITHER role"
   },
   {
-    "Name": "Anna Ivanova",
-    "Role": "Sales Director",
-    "Company": "Espire Infolabs",
-    "LinkedIn": "https://www.linkedin.com/in/annja"
+    "Name": "Nick Beardsley",
+    "Role": "Enterprise Director @ Onecom",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "PE-backed (LDC)",
+    "Location": "Whiteley/Fareham, Hants",
+    "Score": "14/27 (PE rubric)"
   },
   {
-    "Name": "Abhijeet Malan",
-    "Role": "VP Sales",
-    "Company": "Genpact",
-    "LinkedIn": "https://www.linkedin.com/in/abhijeetmalan"
+    "Name": "Jasper Marlow",
+    "Role": "Head of Sales @ Bridewell",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "PE-backed (GCP)",
+    "Location": "Reading-orbit, Berks",
+    "Score": "14/27 (PE rubric)"
   },
   {
-    "Name": "Farshad Ashrafe",
-    "Role": "Sales Director",
-    "Company": "Service Channel",
-    "LinkedIn": "https://www.linkedin.com/in/farshad-ashrafe-a364139a"
+    "Name": "Peter Whyte",
+    "Role": "Head of Business Development @ Bridewell",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "PE-backed (GCP)",
+    "Location": "Berks (loc?)",
+    "Score": "14/27 (PE rubric)"
   },
   {
-    "Name": "Arek Konieczny",
-    "Role": "Senior Sales Director, Head of EMEA AI Customer Excellence Center",
-    "Company": "Oracle",
-    "LinkedIn": "https://www.linkedin.com/in/arek-konieczny"
+    "Name": "Mark Hollands",
+    "Role": "Enterprise Acct Dir / Head of Comms-South @ Babble",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "PE-backed (Graphite)",
+    "Location": "London/South",
+    "Score": "14/27 (PE rubric)"
   },
   {
-    "Name": "Wissam Lebsir",
-    "Role": "Head of Sales",
-    "Company": "Mixpanel",
-    "LinkedIn": "https://www.linkedin.com/in/wissam-lebsir-32311162"
+    "Name": "Rhys Bailey",
+    "Role": "CRO @ Focus Group",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "PE-backed (Hg)",
+    "Location": "Shoreham, Sussex",
+    "Score": "14/27 (PE rubric)"
+  },
+  {
+    "Name": "Matt Wood",
+    "Role": "Sales & Marketing Director @ Acora",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "PE-backed (LDC)",
+    "Location": "Burgess Hill, Sussex",
+    "Score": "14/27 (PE rubric)"
+  },
+  {
+    "Name": "Joe Allsopp",
+    "Role": "Head of Strategic Sales @ Evalian",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "Winchester-area (unconf.)",
+    "Score": "14/24 (MSP rubric)",
+    "LinkedIn": "https://uk.linkedin.com/in/joenallsopp"
+  },
+  {
+    "Name": "Steve Fearon",
+    "Role": "CCO @ Pulsant",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "PE-backed (Antin)",
+    "Location": "Maidenhead, Berks",
+    "Score": "13/27 (PE rubric)"
+  },
+  {
+    "Name": "Neil Wood",
+    "Role": "Chief Sales & Commercial Officer @ UK Connect",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "Farnborough / Hants",
+    "Score": "13/24 (MSP rubric)",
+    "LinkedIn": "https://uk.linkedin.com/in/woodneil",
+    "Note": "Only other AI-framing signal besides Rye Austin"
+  },
+  {
+    "Name": "Karl Deady",
+    "Role": "Sales / Executive Director @ Cinos",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "Camberley, Surrey",
+    "Score": "12/24 (MSP rubric)",
+    "LinkedIn": "https://www.linkedin.com/in/deadykarl/",
+    "Note": "Surrey-local; scaled Cinos to Fast Track 100"
+  },
+  {
+    "Name": "Phil Connor",
+    "Role": "Head of Business Development @ TechQuarters (Babble)",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "Greater London",
+    "Score": "12/24 (MSP rubric)",
+    "LinkedIn": "https://uk.linkedin.com/in/phil-connor-02146791"
+  },
+  {
+    "Name": "Jon Parnell",
+    "Role": "Commercial Director @ Minerva IT",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "Potters Bar, Herts",
+    "Score": "12/24 (MSP rubric)"
+  },
+  {
+    "Name": "Gareth Meyer",
+    "Role": "CRO @ Technimove",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "Medstead, Hants (Surrey border)",
+    "Score": "11/24 (MSP rubric)",
+    "LinkedIn": "https://www.linkedin.com/in/garethmeyer/"
+  },
+  {
+    "Name": "Natasha Benford",
+    "Role": "Head of Sales @ Xtravirt",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "Bracknell, Berks",
+    "Score": "11/24 (MSP rubric)"
+  },
+  {
+    "Name": "Matt Dudleston",
+    "Role": "Sales Director @ Opus",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "London (HQ Reigate)",
+    "Score": "11/24 (MSP rubric)"
+  },
+  {
+    "Name": "Johan Holder",
+    "Role": "Board Director, Sales @ Databarracks",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "London",
+    "Score": "11/24 (MSP rubric)",
+    "LinkedIn": "https://uk.linkedin.com/in/johan-holder-5257b211"
+  },
+  {
+    "Name": "Paul Davis",
+    "Role": "Sales Director @ Virtual IT",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "NW London",
+    "Score": "11/24 (MSP rubric)"
+  },
+  {
+    "Name": "James Teather",
+    "Role": "Group Commercial Director @ Dataquest Group",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "London/Oxford (unconf.)",
+    "Score": "11/24 (MSP rubric)",
+    "LinkedIn": "https://uk.linkedin.com/in/jamesteather"
+  },
+  {
+    "Name": "Steve Goodwin",
+    "Role": "Commercial Director @ Cisilion",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "UK (unconfirmed)",
+    "Score": "11/24 (MSP rubric)"
+  },
+  {
+    "Name": "John Forde",
+    "Role": "Sales Director UK / MD @ Bluesource",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "London",
+    "Score": "11/24 (MSP rubric)",
+    "LinkedIn": "https://uk.linkedin.com/in/john-forde-a220232"
+  },
+  {
+    "Name": "Sebastian Paternoster",
+    "Role": "Group Sales Director @ Dataquest Group",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "Greater London",
+    "Score": "11/24 (MSP rubric)",
+    "LinkedIn": "https://uk.linkedin.com/in/sebastian-paternoster-9847911aa"
+  },
+  {
+    "Name": "Lee Walker",
+    "Role": "Sales Director @ CyberOne",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "London",
+    "Score": "11/24 (MSP rubric)",
+    "LinkedIn": "https://www.linkedin.com/in/lee-walker-0710a92/"
+  },
+  {
+    "Name": "Steve Orton",
+    "Role": "CRO / Sales Director @ Wanstor Group",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "Southampton (borderline; London HQ)",
+    "Score": "10/24 (MSP rubric)",
+    "LinkedIn": "https://www.linkedin.com/in/steve-orton-25b0081/"
+  },
+  {
+    "Name": "Siv Sivasamy",
+    "Role": "New Business Director @ Charles Square",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "London",
+    "Score": "10/24 (MSP rubric)",
+    "LinkedIn": "https://www.linkedin.com/company/charles-square"
+  },
+  {
+    "Name": "Paul Gibbs",
+    "Role": "Head of Sales @ UK Connect",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "Sunbury-on-Thames, Surrey",
+    "Score": "10/24 (MSP rubric)",
+    "LinkedIn": "https://uk.linkedin.com/in/paul-gibbs-b2124b13",
+    "Note": "Surrey-local"
+  },
+  {
+    "Name": "Lucy Edlund",
+    "Role": "Account Director @ JUMPSEC",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "London",
+    "Score": "10/24 (MSP rubric)",
+    "LinkedIn": "https://www.linkedin.com/in/lucy-edlund-295125124/"
+  },
+  {
+    "Name": "Russell Bristow",
+    "Role": "CRO @ Ampito Group",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "London (HQ Hove)",
+    "Score": "10/24 (MSP rubric)",
+    "LinkedIn": "https://rocketreach.co/russell-bristow-email_17206020"
+  },
+  {
+    "Name": "Sion Harrington",
+    "Role": "Sales & Marketing Director @ Akita",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "Kent / Wrotham (commuter belt)",
+    "Score": "10/24 (MSP rubric)"
+  },
+  {
+    "Name": "David Jones",
+    "Role": "Head of Corporate Sales @ Active8 Managed Technologies",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "Unconfirmed (firm Notts/Newark)",
+    "Score": "10/24 (MSP rubric)",
+    "LinkedIn": "https://uk.linkedin.com/company/active8-managed-technologies",
+    "Note": "Location unconfirmed — verify before progressing"
+  },
+  {
+    "Name": "Mark Leppard",
+    "Role": "Chief Sales Officer @ Teneo",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "Reading, Berks",
+    "Score": "9/24 (MSP rubric)"
+  },
+  {
+    "Name": "Tom Playfoot",
+    "Role": "CCO @ Virtual IT",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "London / South-east (unconf.)",
+    "Score": "9/24 (MSP rubric)"
+  },
+  {
+    "Name": "Mike Beeson",
+    "Role": "Sales Manager @ Redinet",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "Bromley (Greater London)",
+    "Score": "9/24 (MSP rubric)",
+    "LinkedIn": "https://www.linkedin.com/in/mike-beeson-04a78a19/"
+  },
+  {
+    "Name": "Alex Cook",
+    "Role": "Commercial Director @ KJL Group",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "Basildon, Essex (borderline)",
+    "Score": "8/24 (MSP rubric)"
+  },
+  {
+    "Name": "AJ Thompson",
+    "Role": "CCO @ Northdoor plc",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "London (Old Street)",
+    "Score": "7/24 (MSP rubric)",
+    "LinkedIn": "https://www.northdoor.co.uk/about-us/management-team/aj-thompson/"
+  },
+  {
+    "Name": "Shane Thorne",
+    "Role": "Commercial Director @ CST Assets",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "Gerrards Cross, Bucks",
+    "Score": "6/24 (MSP rubric)",
+    "LinkedIn": "https://www.linkedin.com/company/cst-ltd"
+  },
+  {
+    "Name": "Sohail Razaq",
+    "Role": "Senior Account Manager (heads sales) @ Wavex",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "London",
+    "Score": "6/24 (MSP rubric)",
+    "LinkedIn": "https://rocketreach.co/sohail-razaq-email_79460170"
+  },
+  {
+    "Name": "Loic Jones",
+    "Role": "Account Director @ HybrIT",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "London area (HQ Northampton)",
+    "Score": "6/24 (MSP rubric)",
+    "LinkedIn": "https://uk.linkedin.com/in/loicjones"
+  },
+  {
+    "Name": "Stu Malcolm",
+    "Role": "Sales Manager @ Charles Square",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "London (assumed)",
+    "Score": "5/24 (MSP rubric)",
+    "LinkedIn": "https://www.linkedin.com/company/charles-square"
+  },
+  {
+    "Name": "Mark Spenser",
+    "Role": "Sales Director @ Select Technology Systems",
+    "Role fit": "Sales Director — Guildford (services leader)",
+    "Channel": "MSP-pipeline",
+    "Location": "Kent (Tonbridge area; ID uncertain)",
+    "Score": "4/24 (MSP rubric)",
+    "LinkedIn": "https://www.linkedin.com/in/mark-spenser-a177a3278/",
+    "Note": "Identity match uncertain — verify"
+  },
+  {
+    "Name": "Rod Taylor",
+    "Role": "Commercial Director @ Digital Space",
+    "Role fit": "Sales Director — Guildford (location hold)",
+    "Channel": "PE-backed (Graphite)",
+    "Location": "Location unconfirmed",
+    "LinkedIn": "https://www.linkedin.com/in/rod-taylor-aca-996339143",
+    "Note": "Deep IT/comms commercial-build record (ex-Phoenix IT/Synstar)"
+  },
+  {
+    "Name": "Archie Denton",
+    "Role": "Commercial Director, Collaboration & Compliance @ Kerv",
+    "Role fit": "Sales Director — Guildford (location hold)",
+    "Channel": "PE-backed (Bridgepoint)",
+    "Location": "Location unconfirmed",
+    "LinkedIn": "https://www.linkedin.com/in/archie-denton-684814178",
+    "Note": "Finance-sector new-business hunter"
+  },
+  {
+    "Name": "Grahame Lewis",
+    "Role": "Business Development Director @ Babble",
+    "Role fit": "Sales Director — Guildford (location hold)",
+    "Channel": "PE-backed (Graphite)",
+    "Location": "Location unconfirmed"
   }
 ]
 </script>
